@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users_to_admin")
@@ -29,6 +30,22 @@ public class User {
         this.mail = mail;
         this.password = password;
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id) &&
+                mail.equals(user.mail) &&
+                password.equals(user.password) &&
+                role.equals(user.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mail, password, role);
     }
 
     public User(Long id, String mail, String password, String role) {

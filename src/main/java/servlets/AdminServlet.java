@@ -15,11 +15,12 @@ import java.util.List;
 @WebServlet("/admin")
 public class AdminServlet extends HttpServlet {
     private Service service = ServiceImpl.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> list = service.getAllUsers();
-        req.setAttribute("allUsers",list);
-        req.getRequestDispatcher("jsp/admin.jsp").forward(req,resp);
+        req.setAttribute("allUsers", list);
+        req.getRequestDispatcher("jsp/admin.jsp").forward(req, resp);
     }
 
     @Override

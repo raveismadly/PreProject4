@@ -13,8 +13,8 @@
     <title>Update</title>
 </head>
 <body>
-<a href="create">Create</a>
-<a href="read">Read</a>
+<a href="admin">ADMIN MAIN TITLE</a>
+
 <jsp:useBean id="haveThisUser" scope="request" type="model.User"/>
 <c:if test="${haveThisUser!=null}">
 <form action="update" METHOD="post">
@@ -23,13 +23,13 @@
         <c:if test="${haveThisUser!=null}">
             <input type="hidden" name="id" value="<c:out value='${haveThisUser.id}'/>"/>
         </c:if>
-        <tr><th>Name</th>
-            <td><input name="name" type="text" value="<c:out value='${haveThisUser.name}'/>"/></td>
+        <tr><th>Mail</th>
+            <td><input name="mail" type="text" value="<c:out value='${haveThisUser.mail}'/>"/></td>
 
-            <th>Surname</th>
-            <td><input name="surname" type="text" value="<c:out value='${haveThisUser.surname}'/>"/></td>
-            <th>Age</th>
-            <td><input name="age" type="number"value="<c:out value='${haveThisUser.age}'/>"/></td>
+            <th>Password</th>
+            <td><input name="password" type="text" value="<c:out value='${haveThisUser.password}'/>"/></td>
+            <th>Role</th>
+            <td><input name="role" type="text"value="<c:out value='${haveThisUser.role}'/>"/></td>
         </tr>
         <tr>
             <td>

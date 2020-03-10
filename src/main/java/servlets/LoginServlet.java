@@ -27,8 +27,11 @@ public class LoginServlet extends HttpServlet {
         String mail = req.getParameter("mail");
         String password = req.getParameter("password");
         User user;
-        if (service.validateUser(mail, password)) {
+        if (mail.equals("") || password.equals("")) {
+            resp.sendRedirect("login");
+        } else if (service.validateUser(mail, password)) {
             HttpSession session = req.getSession();
+
             if ((user = service.getUserByMail(mail)) != null) {
                 session.setAttribute("role", user.getRole());
                 if (session.getAttribute("role").equals("admin")) {
@@ -37,9 +40,9 @@ public class LoginServlet extends HttpServlet {
                     resp.sendRedirect("user");
                 }
             }
-            else {
-                resp.sendRedirect("login");
-            }
+
+        } else {
+            resp.sendRedirect("login");
         }
     }
 }

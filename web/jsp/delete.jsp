@@ -13,8 +13,8 @@
     <title>Delete</title>
 </head>
 <body>
-<a href="create">Create</a>
-<a href="read">Read</a>
+<a href="admin">ADMIN MAIN TITLE</a>
+
 <jsp:useBean id="user" scope="request" type="model.User"/>
 <form method="post" name="delete">
     <table>
@@ -22,12 +22,12 @@
             <input type="hidden" name="id" value="<c:out value='${user.id}'/>"/>
         </c:if>
         <tr>
-            <td>Name</td>
-            <th><c:out value="${user.name}"/></th>
-            <td>Surname</td>
-            <th><c:out value="${user.surname}"/></th>
-            <td>Age</td>
-            <th><c:out value="${user.age}"/></th>
+            <td>Mail</td>
+            <th><c:out value="${user.mail}"/></th>
+            <td>Password</td>
+            <th><c:out value="${user.password}"/></th>
+            <td>Role</td>
+            <th><c:out value="${user.role}"/></th>
         </tr>
         <tr>
             <td>

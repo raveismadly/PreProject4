@@ -17,17 +17,19 @@ public class DeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String mail = req.getParameter("mail");
+//        String mail = req.getParameter("mail");
+        Long id = Long.parseLong(req.getParameter("id"));
         User user;
-        user = service.getUserByMail(mail);
+        user = service.getUserById(id);
         req.setAttribute("user", user);
         req.getRequestDispatcher("jsp/delete.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Long id = Long.parseLong(req.getParameter("id"));
         service.deleteUser(id);
+        resp.setStatus(200);
         resp.sendRedirect("admin");
     }
 }

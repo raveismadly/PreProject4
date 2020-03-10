@@ -11,29 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/update")
-public class UpdateServlet extends HttpServlet {
-    private Service service = ServiceImpl.getInstance();
+@WebServlet("/create")
+public class CreateUserServlet extends HttpServlet {
+    Service service = ServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String mail = req.getParameter("mail");
-        Long id = Long.parseLong(req.getParameter("id"));
-        User haveThisUser = service.getUserById(id);
-        req.setAttribute("haveThisUser", haveThisUser);
-        req.getRequestDispatcher("jsp/update.jsp").forward(req, resp);
+        req.getRequestDispatcher("jsp/create.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Long id = Long.parseLong(req.getParameter("id"));
         String mail = req.getParameter("mail");
         String password = req.getParameter("password");
         String role = req.getParameter("role");
-        if (id != null && mail != null && password != null && role != null) {
-            service.updateUser(new User(id, mail, password, role));
+        if (mail != null && password != null && role != null) {
+            service.addUser(new User(mail, password, role));
         }
-        resp.setStatus(200);
         resp.sendRedirect("admin");
     }
 }

@@ -42,6 +42,7 @@ public class ServiceImpl implements Service {
     public boolean validateUser(String mail, String password) {
         return userDao.validateUser(mail, password);
     }
+
     public User getUserByMail(String mail) {
         return userDao.getUserByMail(mail);
     }

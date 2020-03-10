@@ -41,7 +41,7 @@ public class UserJdbcDAO implements UserDAO {
     @Override
     public Boolean deleteUser(Long id) {
         boolean deleted = false;
-        try (PreparedStatement pr = connection.prepareStatement("delete from users where id = ?")) {
+        try (PreparedStatement pr = connection.prepareStatement("delete from users_to_admin where id = ?")) {
             connection.setAutoCommit(false);
             pr.setLong(1, id);
             deleted = pr.executeUpdate() > 0;
@@ -105,7 +105,7 @@ public class UserJdbcDAO implements UserDAO {
     @Override
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
-        try (PreparedStatement pr = connection.prepareStatement("select * from users")) {
+        try (PreparedStatement pr = connection.prepareStatement("select * from users_to_admin")) {
             ResultSet res = pr.executeQuery();
             while (res.next()) {
                 Long id = res.getLong(1);

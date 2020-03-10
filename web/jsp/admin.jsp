@@ -7,7 +7,9 @@
 </head>
 <body>
 
-<a href="login">Read</a>
+<a href="login">Login Title</a>
+<a href="create">Create Title</a>
+
 <table>
     <th>Id</th>
     <th>Mail</th>

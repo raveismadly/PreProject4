@@ -6,10 +6,10 @@ import util.PropertiesReader;
 
 public class UserDaoFactory {
     public UserDAO getFactory() {
-//        if (PropertiesReader.getProperties("hibernate.properties").getProperty("DAO").equals("Hibernate")) {
-//         /   return new UserHibernateDAO(DBHelper.getSessionFactory());
-//        } else {
+        if (PropertiesReader.getProperties("hibernate.properties").getProperty("DAO").equals("Hibernate")) {
+            return new UserHibernateDAO(DBHelper.getSessionFactory());
+        } else {
             return new UserJdbcDAO(DBHelper.getConnection());
-//        }
+        }
     }
 }
