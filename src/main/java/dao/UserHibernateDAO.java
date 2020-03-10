@@ -13,14 +13,13 @@ public class UserHibernateDAO implements UserDAO {
     private SessionFactory sessionFactory;
 
     public UserHibernateDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = DBHelper.getSessionFactory();
+        this.sessionFactory = sessionFactory;// DBHelper.getSessionFactory();
     }
 
     @Override
     public void addUser(User user) {
         try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.getTransaction();
-            transaction.begin();
+            Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
         }
@@ -52,11 +51,9 @@ public class UserHibernateDAO implements UserDAO {
     public User getUserById(Long id) {
         User user;
         try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
             Query query = session.createQuery("from User where id = :id")
                     .setParameter("id", id);
             user = (User) query.uniqueResult();
-            transaction.commit();
         }
         return user;
     }
@@ -64,9 +61,7 @@ public class UserHibernateDAO implements UserDAO {
     @Override
     public List<User> getAllUsers() {
         try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
             List<User> users = session.createQuery("from User").list();
-            transaction.commit();
             return users;
         }
 
@@ -76,19 +71,11 @@ public class UserHibernateDAO implements UserDAO {
     public boolean validateUser(String mail, String password) {
         User user;
         try (Session session = sessionFactory.openSession()) {
-//            Query query = session.createQuery("from User where mail=:mail and password=:password")
-//                    .setParameter("mail", mail);
-//                    query.getParameter("password");
-//            user = (User) query.uniqueResult();
-//            user.getPassword().equals(password);
-//            return true;
-            Transaction transaction = session.beginTransaction();
             Query query = session.createQuery("from User where mail = :mail and password=:password")
                     .setParameter("mail", mail)
                     .setParameter("password", password);
             user = (User) query.uniqueResult();
             user.getPassword().equals(password);
-            transaction.commit();
             return true;
         } catch (Exception e) {
             System.out.println("Wrong Password in Validate");
@@ -100,11 +87,9 @@ public class UserHibernateDAO implements UserDAO {
     public User getUserByMail(String mail) {
         User user;
         try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
             Query query = session.createQuery("from User where mail = :mail")
                     .setParameter("mail", mail);
             user = (User) query.uniqueResult();
-            transaction.commit();
         }
         return user;
     }

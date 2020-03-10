@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserJdbcDAO implements UserDAO {
-    Connection connection;
+    private Connection connection;
 
     public UserJdbcDAO(Connection connectionDao) {
         this.connection = connectionDao;
