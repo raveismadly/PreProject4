@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import util.DBHelper;
 
 import java.util.List;
 
@@ -20,8 +19,12 @@ public class UserHibernateDAO implements UserDAO {
     public void addUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
+            try {
+                session.save(user);
+                transaction.commit();
+            } catch (Exception e) {
+                transaction.rollback();
+            }
         }
     }
 
@@ -29,9 +32,14 @@ public class UserHibernateDAO implements UserDAO {
     public Boolean deleteUser(Long id) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.delete(getUserById(id));
-            transaction.commit();
-            return true;
+            try {
+                session.delete(getUserById(id));
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+                return false;
+            }
         }
     }
 
@@ -39,9 +47,14 @@ public class UserHibernateDAO implements UserDAO {
     public Boolean updateUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.update(user);
-            transaction.commit();
-            return true;
+            try {
+                session.update(user);
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+                return false;
+            }
         }
 
     }
